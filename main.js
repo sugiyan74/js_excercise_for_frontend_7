@@ -21,13 +21,13 @@
       return result.json();
     })
     .then(data => {
-        const quizArray = data.results;
-        quizArray.forEach((quizData,index) => {
-          const quizLiElement = document.createElement('li');
-          quizLiElement.innerText = index + 1 + '件目のクイズデータ';
-          quizUlElement.append(quizLiElement);
-          quizLiElement.append(buildQuizList(quizData));
-        });  
+      const quizArray = data.results;
+      quizArray.forEach((quizData, index) => {
+        const quizLiElement = document.createElement('li');
+        quizLiElement.innerText = index + 1 + '件目のクイズデータ';
+        quizUlElement.append(quizLiElement);
+        quizLiElement.append(buildQuizList(quizData));
+      });
     });
 
 

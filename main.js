@@ -14,6 +14,21 @@
   //     - resultsプロパティ(配列)の中に含まれている10件のデータ(オブジェクト)をforEachで取得する
   //       - 「◯件目のクイズデータ」をli要素として追加する
   //       - buildQuizList関数の戻り値(ul要素のDOM)をli要素に追加する。(結果としてネスト(入れ子)構造のリストになる)
+  const promise = fetch(API_URL);
+  const quizUlElement = document.getElementById('quiz-list');
+  promise
+    .then(result => {
+      return result.json();
+    })
+    .then(data => {
+        const quizArray = data.results;
+        quizArray.forEach((quizData,index) => {
+          const quizLiElement = document.createElement('li');
+          quizLiElement.innerText = index + 1 + '件目のクイズデータ';
+          quizUlElement.append(quizLiElement);
+          quizLiElement.append(buildQuizList(quizData));
+        });  
+    });
 
 
   // `buildQuizList関数` を実装する
@@ -29,5 +44,13 @@
   //    - quiz : オブジェクト(クイズデータ)
   //  - 戻り値
   //    - ul要素のDOM
-
+  function buildQuizList(quizData) {
+    const childUlElement = document.createElement('ul');
+    for(let prop in quizData) {
+      const childLiElement = document.createElement('li');
+      childLiElement.innerHTML = `<strong>${prop}</strong> : ${quizData[prop]}`;
+      childUlElement.appendChild(childLiElement);
+    }
+    return childUlElement;
+  }
 })();
